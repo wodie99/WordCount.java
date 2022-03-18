@@ -43,7 +43,7 @@ public class WordCount {
 
         BufferedReader bufferedReader = null;
         //Der Pfad zur Textdatei
-//        String filePath = "src/beispiel_1.txt";
+//        String filePath = "beispiel.txt";
         String filePath = args[0];
         File file = new File(filePath);
         try {
@@ -57,10 +57,8 @@ public class WordCount {
                 anzahlZeilen++;
                 anzahlZeichen += line.length();
 
-//                toWords(line.toLowerCase());
-
 //              Spezialaufruf für die Lutherbibel (Ausschluss der Quellenbezeichnung)
-
+//                toWords(line.toLowerCase());
                 toWords(line.substring(4).toLowerCase());
             }
         } catch (
@@ -80,7 +78,7 @@ public class WordCount {
 
 
 
-//
+        //  Code für Debug
 //        wordHM.forEach((k, v) -> {
 //            if (v > 0) System.out.println("Key: " + k + "  ----- Value: " + v);
 //        });

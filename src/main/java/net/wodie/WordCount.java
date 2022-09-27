@@ -5,28 +5,22 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WordCount {
+    static HashMap<String, Integer> wordHashMap = new HashMap<>();
+    static long anzahlZeilen = 0;
+    static long anzahlZeichen = 0;
 
-    public static ArrayList<String> wordList = new ArrayList<>();
-    public static HashMap<String, Integer> wordHashMap = new HashMap<>();
-
-    //  Zerlegt eine übergebene Zeile (String) in ein Array aus Wörtern.
-    //  Danacch wird der Inhalt des Arrays in eine public Hashmap übergebben
-    //  in der alle vorkommenden Wörter und deren Häufigkeit gespeichert wird.
-
-
-
-
-    public static void toWords(String line) {
+    public static void fillWordHashMap(String line) {
+        //  Zerlegt eine übergebene Zeile (String) in ein Array aus Wörtern.
+        //  Danacch wird der Inhalt des Arrays in eine public Hashmap übergebben
+        //  in der alle vorkommenden Wörter und deren Häufigkeit gespeichert wird.
         String[] wordArray = line.split("[^a-zA-ZäöüßÄÖÜ']+");
         for (String word : wordArray) {
             if (word.length() > 0) {
-
-                //                if (count != null) {
+//                if (count != null) {
 //                    wordHashMap.put(word, count + 1);
 //                } else {
 //                    wordHashMap.put(word, 1);
@@ -36,12 +30,9 @@ public class WordCount {
         }
     }
 
-
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        long anzahlZeilen = 0;
-        long anzahlWoerter = 0;
-        long anzahlZeichen = 0;
+
 
         BufferedReader bufferedReader = null;
         //Der Pfad zur Textdatei
@@ -58,8 +49,8 @@ public class WordCount {
                 anzahlZeilen++;
                 anzahlZeichen += line.length();
 //              Spezialaufruf für die Lutherbibel (Ausschluss der Quellenbezeichnung)
-                toWords(line.substring(4).toLowerCase());
-//                toWords(line.toLowerCase());
+                fillWordHashMap(line.substring(4).toLowerCase());
+//                fillWordHashMap(line.toLowerCase());
             }
         } catch (
                 IOException e) {

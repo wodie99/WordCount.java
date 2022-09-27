@@ -1,1 +1,0 @@
-java -classpath /Users/wodie/Lernen/Java/EigeneTeste/WordCount/target/classes net.wodie.WordCount beispiel.txt

@@ -12,7 +12,7 @@ import java.util.Map;
 public class WordCount {
 
     public static ArrayList<String> wordList = new ArrayList<>();
-    public static HashMap<String, Integer> wordHM = new HashMap<>();
+    public static HashMap<String, Integer> wordHashMap = new HashMap<>();
 
     //  Zerlegt eine übergebene Zeile (String) in ein Array aus Wörtern.
     //  Danacch wird der Inhalt des Arrays in eine public Hashmap übergebben
@@ -22,16 +22,14 @@ public class WordCount {
         for (String word : wordArray) {
             if (word.length() > 0) {
 
-                Integer count = wordHM.get(word);
+                Integer count = wordHashMap.get(word);
                 if (count != null) {
-                    wordHM.put(word, count + 1);
+                    wordHashMap.put(word, count + 1);
                 } else {
-                    wordHM.put(word, 1);
+                    wordHashMap.put(word, 1);
                 }
             }
-
         }
-
     }
 
 
@@ -43,8 +41,8 @@ public class WordCount {
 
         BufferedReader bufferedReader = null;
         //Der Pfad zur Textdatei
-//        String filePath = "beispiel.txt";
-        String filePath = args[0];
+        String filePath = "src/main/resources/beispiel.txt";
+//        String filePath = args[0];
         File file = new File(filePath);
         try {
             //Der BufferedReader erwartet einen FileReader.
@@ -53,13 +51,11 @@ public class WordCount {
             String line;
             //null wird bei EOF oder Fehler zurueckgegeben
             while (null != (line = bufferedReader.readLine())) {
-
                 anzahlZeilen++;
                 anzahlZeichen += line.length();
-
 //              Spezialaufruf für die Lutherbibel (Ausschluss der Quellenbezeichnung)
-//                toWords(line.toLowerCase());
                 toWords(line.substring(4).toLowerCase());
+//                toWords(line.toLowerCase());
             }
         } catch (
                 IOException e) {
@@ -76,28 +72,23 @@ public class WordCount {
 
         long zeit1 = System.currentTimeMillis() - startTime;
 
-
-
-        //  Code für Debug
+//        Code für Debug
 //        wordHM.forEach((k, v) -> {
 //            if (v > 0) System.out.println("Key: " + k + "  ----- Value: " + v);
 //        });
-
-
         System.out.printf("Anzahl der eingelesenen Zeichen: %d %n", anzahlZeichen);
         System.out.printf("Anzahl der verarbeiteten Zeilen: %d %n", anzahlZeilen);
-
-        System.out.printf("Anzahl der unterschiedlichen Wörter: %d %n", wordHM.size());
+        System.out.printf("Anzahl der unterschiedlichen Wörter: %d %n", wordHashMap.size());
         System.out.printf("Laufzeit bis zum Ende des Einlesens: %d (in msec) %n",zeit1);
         System.out.printf("Laufzeit bis zum Ende der Ausgabe: %d (in msec) %n",System.currentTimeMillis() - startTime);
 
-        wordHM.entrySet()
+        wordHashMap.entrySet()
                 .stream()
-                .filter(x->x.getValue() > 8000)
+                .filter(x->x.getKey().equals("gott"))
+//                .filter(x->x.getValue() > 4000)
 //                .filter(x->x.getValue() == 1)
 //                .sorted(Map.Entry.<String, Integer>comparingByKey())
                 .sorted(Map.Entry.<String, Integer>comparingByValue())
                 .forEach(System.out::println);
-
     }
 }

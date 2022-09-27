@@ -17,23 +17,27 @@ public class WordCount {
     //  Zerlegt eine übergebene Zeile (String) in ein Array aus Wörtern.
     //  Danacch wird der Inhalt des Arrays in eine public Hashmap übergebben
     //  in der alle vorkommenden Wörter und deren Häufigkeit gespeichert wird.
+
+
+
+
     public static void toWords(String line) {
         String[] wordArray = line.split("[^a-zA-ZäöüßÄÖÜ']+");
         for (String word : wordArray) {
             if (word.length() > 0) {
 
-                Integer count = wordHashMap.get(word);
-                if (count != null) {
-                    wordHashMap.put(word, count + 1);
-                } else {
-                    wordHashMap.put(word, 1);
-                }
+                //                if (count != null) {
+//                    wordHashMap.put(word, count + 1);
+//                } else {
+//                    wordHashMap.put(word, 1);
+//                }
+                wordHashMap.merge(word, 1, Integer::sum);
             }
         }
     }
 
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         long anzahlZeilen = 0;
         long anzahlWoerter = 0;
@@ -84,11 +88,11 @@ public class WordCount {
 
         wordHashMap.entrySet()
                 .stream()
-                .filter(x->x.getKey().equals("gott"))
+                .filter(x->x.getKey().equals("und"))
 //                .filter(x->x.getValue() > 4000)
 //                .filter(x->x.getValue() == 1)
 //                .sorted(Map.Entry.<String, Integer>comparingByKey())
-                .sorted(Map.Entry.<String, Integer>comparingByValue())
+                .sorted(Map.Entry.comparingByValue())
                 .forEach(System.out::println);
     }
 }
